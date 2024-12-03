@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -46,13 +48,22 @@ fun MyApp(modifier: Modifier = Modifier) {
 
         if (shouldShowOnboarding) OnBoardingScreen(onContinueClicked = {
             shouldShowOnboarding = false
-        }, modifier = modifier) else Greeting(
-            name = "Android",
-            modifier = modifier.padding(innerPadding)
-        )
+        }, modifier = modifier) else ListView()
     }
 }
 
+@Composable
+fun ListView(
+    modifier: Modifier = Modifier,
+    dataList: List<String> = List(1000) { "$it" }
+) {
+    LazyColumn(modifier.padding(vertical = 4.dp)) {
+        items(items = dataList) { name ->
+            Greeting(name = name)
+        }
+    }
+
+}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
