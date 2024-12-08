@@ -7,17 +7,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -87,7 +90,7 @@ fun SearchBar(
 }
 
 @Composable
-fun GridView(modifier: Modifier = Modifier) {
+fun GridViewCardItem(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -113,12 +116,48 @@ fun GridView(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun ListViewCardItem(
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        modifier = modifier.fillMaxWidth().padding(8.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                modifier = modifier
+                    .size(80.dp)
+                    .background(color = Color.Red),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(R.drawable.ic_launcher_foreground),
+                contentDescription = null
+            )
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = modifier.padding(horizontal = 16.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+private fun ListViewCardItemPreview() {
+    LearningComposeTheme {
+
+        ListViewCardItem()
+    }
+}
+
 @Preview(backgroundColor = 0xFFF5F0EE, showBackground = true)
 @Composable
 private fun GirdViewPreview() {
     LearningComposeTheme {
 
-        GridView()
+        GridViewCardItem()
     }
 }
 
