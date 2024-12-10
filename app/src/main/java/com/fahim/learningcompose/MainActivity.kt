@@ -1,19 +1,28 @@
 package com.fahim.learningcompose
 
+import Item
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -90,7 +99,7 @@ fun SearchBar(
 }
 
 @Composable
-fun GridViewCardItem(modifier: Modifier = Modifier) {
+fun GridViewCardItem(modifier: Modifier = Modifier, item: Item) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -98,7 +107,7 @@ fun GridViewCardItem(modifier: Modifier = Modifier) {
 
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
+            painter = painterResource(item.drawable),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = modifier
@@ -109,7 +118,7 @@ fun GridViewCardItem(modifier: Modifier = Modifier) {
 
         )
         Text(
-            text = stringResource(R.string.app_name),
+            text = item.name,
             modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
             style = MaterialTheme.typography.bodyMedium
         )
@@ -118,12 +127,15 @@ fun GridViewCardItem(modifier: Modifier = Modifier) {
 
 @Composable
 fun ListViewCardItem(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    item: Item
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surfaceVariant,
-        modifier = modifier.fillMaxWidth().padding(8.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
@@ -131,11 +143,11 @@ fun ListViewCardItem(
                     .size(80.dp)
                     .background(color = Color.Red),
                 contentScale = ContentScale.Crop,
-                painter = painterResource(R.drawable.ic_launcher_foreground),
+                painter = painterResource(item.drawable),
                 contentDescription = null
             )
             Text(
-                text = stringResource(R.string.app_name),
+                text = item.name,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = modifier.padding(horizontal = 16.dp)
             )
@@ -143,12 +155,41 @@ fun ListViewCardItem(
     }
 }
 
+@Composable
+fun HorizontalScrollViewRow(
+    modifier: Modifier = Modifier
+) {
+    val dataset = listOf(
+        Item(R.drawable.ic_launcher_foreground, "Item1"),
+        Item(R.drawable.ic_launcher_foreground, "Item2"),
+        Item(R.drawable.ic_launcher_foreground, "Item3"),
+        Item(R.drawable.ic_launcher_foreground, "Item4"),
+        Item(R.drawable.ic_launcher_foreground, "Item5"),
+    )
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
+    ) {
+        items(items = dataset) { item ->
+            GridViewCardItem(item = item)
+        }
+    }
+}
+@Preview
+@Composable
+private fun HorizontalScrollViewRowPreview() {
+    LearningComposeTheme {
+        HorizontalScrollViewRow()
+    }
+}
+
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 private fun ListViewCardItemPreview() {
     LearningComposeTheme {
-
-        ListViewCardItem()
+        val item = Item(R.drawable.ic_launcher_foreground, name = "Sample")
+        ListViewCardItem(item = item)
     }
 }
 
@@ -156,8 +197,9 @@ private fun ListViewCardItemPreview() {
 @Composable
 private fun GirdViewPreview() {
     LearningComposeTheme {
+        val item = Item(R.drawable.ic_launcher_foreground, name = "Sample")
+            GridViewCardItem(item = item)
 
-        GridViewCardItem()
     }
 }
 
