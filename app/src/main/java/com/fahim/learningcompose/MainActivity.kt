@@ -176,6 +176,38 @@ fun HorizontalScrollViewRow(
         }
     }
 }
+
+@Composable
+fun LazyHorizontalGridList(
+    modifier: Modifier = Modifier
+) {
+    val dataset = listOf(
+        Item(R.drawable.ic_launcher_foreground, "Item1"),
+        Item(R.drawable.ic_launcher_foreground, "Item2"),
+        Item(R.drawable.ic_launcher_foreground, "Item3"),
+        Item(R.drawable.ic_launcher_foreground, "Item4"),
+        Item(R.drawable.ic_launcher_foreground, "Item5"),
+    )
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier.height(168.dp)
+    ) {
+        items(items = dataset) { item ->
+            ListViewCardItem(item = item)
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun LazyHorizontalGridListPreview() {
+    LearningComposeTheme {
+        LazyHorizontalGridList()
+    }
+}
 @Preview
 @Composable
 private fun HorizontalScrollViewRowPreview() {
