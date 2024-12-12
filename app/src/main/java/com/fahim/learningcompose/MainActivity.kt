@@ -13,13 +13,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
@@ -59,13 +59,23 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LearningComposeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android", modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            AppInPortrait()
+        }
+    }
+}
+
+@Composable
+fun AppInPortrait() {
+    LearningComposeTheme {
+        Scaffold(
+            bottomBar = {
+                BottomNavigation()
+            }) { innerPadding ->
+
+
+            HomeScreen(Modifier.padding(innerPadding))
+
+
         }
     }
 }
@@ -140,7 +150,10 @@ fun ListViewCardItem(
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.width(255.dp)
+        ) {
             Image(
                 modifier = modifier
                     .size(80.dp)
@@ -220,15 +233,6 @@ fun HomeSection(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-@Composable
-private fun HomeSectionPreview() {
-    LearningComposeTheme {
-        HomeSection(title = R.string.app_name) {
-            HomeScreen()
-        }
-    }
-}
 
 @Composable
 private fun HomeScreen(modifier: Modifier = Modifier) {
@@ -265,6 +269,22 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
             })
 
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+private fun AppInPortraitPreview() {
+    AppInPortrait()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+private fun HomeSectionPreview() {
+    LearningComposeTheme {
+        HomeSection(title = R.string.app_name) {
+            HomeScreen()
+        }
     }
 }
 
