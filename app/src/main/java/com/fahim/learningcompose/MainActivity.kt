@@ -29,9 +29,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -58,8 +62,7 @@ class MainActivity : ComponentActivity() {
             LearningComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                        name = "Android", modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
@@ -70,8 +73,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        text = "Hello $name!", modifier = modifier
     )
 }
 
@@ -105,9 +107,7 @@ fun SearchBar(
 @Composable
 fun GridViewCardItem(modifier: Modifier = Modifier, item: Item) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(all = 4.dp)
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.padding(all = 4.dp)
 
     ) {
         Image(
@@ -131,8 +131,7 @@ fun GridViewCardItem(modifier: Modifier = Modifier, item: Item) {
 
 @Composable
 fun ListViewCardItem(
-    modifier: Modifier = Modifier,
-    item: Item
+    modifier: Modifier = Modifier, item: Item
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
@@ -207,9 +206,7 @@ fun LazyHorizontalGridList(
 
 @Composable
 fun HomeSection(
-    @StringRes title: Int,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    @StringRes title: Int, modifier: Modifier = Modifier, content: @Composable () -> Unit
 ) {
     Column(modifier) {
         Text(
@@ -236,8 +233,7 @@ private fun HomeSectionPreview() {
 @Composable
 private fun HomeScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier
-            .verticalScroll(rememberScrollState())
+        modifier.verticalScroll(rememberScrollState())
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         SearchBar(Modifier.padding(horizontal = 16.dp))
@@ -250,6 +246,33 @@ private fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(16.dp))
 
 
+    }
+}
+
+@Composable
+fun BottomNavigation(modifier: Modifier = Modifier) {
+    NavigationBar(modifier = modifier, containerColor = MaterialTheme.colorScheme.surfaceVariant) {
+        NavigationBarItem(selected = true,
+            onClick = { /*TODO*/ },
+            label = { Text(text = stringResource(id = R.string.home)) },
+            icon = {
+                Icon(imageVector = Icons.Default.Home, contentDescription = null)
+            })
+        NavigationBarItem(selected = false,
+            onClick = { /*TODO*/ },
+            label = { Text(text = stringResource(id = R.string.profile)) },
+            icon = {
+                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+            })
+
+    }
+}
+
+@Preview
+@Composable
+private fun BottomNavigationPreview() {
+    LearningComposeTheme {
+        BottomNavigation()
     }
 }
 
