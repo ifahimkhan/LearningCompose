@@ -9,10 +9,12 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -36,6 +38,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -68,6 +72,7 @@ class MainActivity : ComponentActivity() {
 fun AppInPortrait() {
     LearningComposeTheme {
         Scaffold(
+            containerColor = MaterialTheme.colorScheme.surface,
             bottomBar = {
                 BottomNavigation()
             }) { innerPadding ->
@@ -78,6 +83,24 @@ fun AppInPortrait() {
 
         }
     }
+}
+
+@Composable
+fun AppInLandscape() {
+    LearningComposeTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Row {
+                SideNavigationRail()
+                HomeScreen()
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+private fun AppInLandscapePreview() {
+    AppInLandscape()
 }
 
 @Composable
@@ -272,6 +295,36 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun SideNavigationRail(modifier: Modifier = Modifier) {
+    NavigationRail(
+        modifier = modifier.padding(start = 8.dp, end = 8.dp),
+        containerColor = MaterialTheme.colorScheme.background
+    ) {
+        Column(
+            modifier = modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            NavigationRailItem(selected = true,
+                onClick = { /*TODO*/ },
+                label = { Text(text = stringResource(id = R.string.home)) },
+                icon = {
+                    Icon(imageVector = Icons.Default.Home, contentDescription = null)
+                })
+            Spacer(modifier = Modifier.height(8.dp))
+
+            NavigationRailItem(selected = false,
+                onClick = { /*TODO*/ },
+                label = { Text(text = stringResource(id = R.string.profile)) },
+                icon = {
+                    Icon(imageVector = Icons.Default.Person, contentDescription = null)
+                })
+        }
+
+    }
+}
+
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 private fun AppInPortraitPreview() {
@@ -288,11 +341,19 @@ private fun HomeSectionPreview() {
     }
 }
 
-@Preview
+@Preview(backgroundColor = 0xFFF5F0EE, showBackground = true)
 @Composable
 private fun BottomNavigationPreview() {
     LearningComposeTheme {
         BottomNavigation()
+    }
+}
+
+@Preview(backgroundColor = 0xFFF5F0EE, showBackground = true)
+@Composable
+private fun SideNavigationRailPreview() {
+    LearningComposeTheme {
+        SideNavigationRail()
     }
 }
 
