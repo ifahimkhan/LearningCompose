@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">LearningCompose</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
 </resources>

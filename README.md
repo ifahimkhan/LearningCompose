@@ -1,11 +1,16 @@
-# Jetpack Compose Basic Android App
-Learn to build an App in jetpack compose - Open-Source Learning Project
+# Jetpack  Compose Android App
+Learn to build a Jetpack Compose App - Open-Source Project
 
 
 
 <br>
 
-## You'll build an app with an onboarding screen, and a list of animated expanding items:
+## We will build and learn the following for the App State in Jetpack Compose:
+* How modifiers help you augment your composables.
+* How standard layout components like Column and LazyRow position child composables.
+* How alignments and arrangements change the position of child composables in their parent.
+* How Material composables like Scaffold and Bottom Navigation help you create comprehensive layouts.
+* How to build flexible composables using slot APIs.
 
 ## Prerequisites
 * Experience with Kotlin syntax, including lambdas
@@ -19,6 +24,7 @@ Learn to build an App in jetpack compose - Open-Source Learning Project
 * How to create a performant list
 * How to add animations
 * How to style and theme an app
+* How to build layouts for different screen configurations.
 
 
 ## Screenshots from this project
@@ -27,7 +33,9 @@ Learn to build an App in jetpack compose - Open-Source Learning Project
 ## Building the project
 * Every feature is easy to follow.
 * Clone the project,see all the branch.
+* Clone the project, the `2.0` branch has the latest code.
 * To learn and implement from the beginning, start with a new project.
+
 
 ### Find this project useful ? :heart:
 

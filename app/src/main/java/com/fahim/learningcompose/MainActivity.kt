@@ -1,180 +1,427 @@
 package com.fahim.learningcompose
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import Item
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
+import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import com.fahim.learningcompose.ui.theme.LearningComposeTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LearningComposeTheme {
-                MyApp(modifier = Modifier.fillMaxSize())
+            val windowSizeClass = calculateWindowSizeClass(this)
+            MyApp(windowSizeClass)
+        }
+    }
+}
+
+@Composable
+fun AppInPortrait() {
+    LearningComposeTheme {
+        Scaffold(
+            containerColor = MaterialTheme.colorScheme.surface,
+            bottomBar = {
+                BottomNavigation()
+            }) { innerPadding ->
+
+
+            HomeScreen(Modifier.padding(innerPadding))
+
+
+        }
+    }
+}
+
+@Composable
+fun AppInLandscape() {
+    LearningComposeTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Row {
+                SideNavigationRail()
+                HomeScreen()
+                }
             }
         }
-    }
 }
 
 @Composable
-fun MyApp(modifier: Modifier = Modifier) {
-    var shouldShowOnboarding by rememberSaveable {
-        mutableStateOf(true)
-    }
-    Surface {
+fun MyApp(windowSize: WindowSizeClass) {
+    when (windowSize.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> {
+            AppInPortrait()
+        }
 
-        if (shouldShowOnboarding) OnBoardingScreen(onContinueClicked = {
-            shouldShowOnboarding = false
-        }, modifier = modifier) else ListView()
-    }
-}
-
-@Composable
-fun ListView(
-    modifier: Modifier = Modifier,
-    dataList: List<String> = List(1000) { "$it" }
-) {
-    LazyColumn(modifier.padding(vertical = 4.dp)) {
-        items(items = dataList) { name ->
-            Greeting(name = name)
+        WindowWidthSizeClass.Expanded -> {
+            AppInLandscape()
         }
     }
+}
 
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+private fun AppInLandscapePreview() {
+    AppInLandscape()
 }
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(
-        color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-    ) {
-        var expanded by rememberSaveable {
-            mutableStateOf(false)
-        }
-        val extraPadding by animateDpAsState(
-            if (expanded) 48.dp else 0.dp,
-            animationSpec = spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
+    Text(
+        text = "Hello $name!", modifier = modifier
+    )
+}
+
+@Composable
+fun SearchBar(
+    modifier: Modifier = Modifier
+) {
+    TextField(
+        value = "",
+        onValueChange = {},
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = stringResource(id = R.string.search)
             )
+        },
+        placeholder = {
+            Text(text = stringResource(id = R.string.search))
+        },
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            focusedContainerColor = MaterialTheme.colorScheme.surface
+        ),
+        modifier = modifier
+            .padding(all = 16.dp)
+            .fillMaxWidth()
+            .heightIn(min = 48.dp)//minimum height of search bar
+    )
+}
+
+@Composable
+fun GridViewCardItem(modifier: Modifier = Modifier, item: Item) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.padding(all = 4.dp)
+
+    ) {
+        Image(
+            painter = painterResource(item.drawable),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = modifier
+                .padding(bottom = 8.dp)
+                .clip(shape = CircleShape)
+                .background(shape = RectangleShape, color = Color.Red)
+
+
         )
+        Text(
+            text = item.name,
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
 
-        Row(modifier = Modifier.padding(24.dp)) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(bottom = extraPadding.coerceAtLeast(0.dp))
-            ) {
-                Text(text = "Hello ")
-                Text(
-                    text = name, style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.ExtraBold
-                    )
-                )
-            }
-            IconButton(
-                onClick = { expanded = !expanded }
-            ) {
-                Icon(
-                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                    contentDescription = if (expanded) {
-                        stringResource(id = R.string.show_less)
-                    } else {
-                        stringResource(id = R.string.show_more)
-                    }
-                )
-
-            }
+@Composable
+fun ListViewCardItem(
+    modifier: Modifier = Modifier, item: Item
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.width(255.dp)
+        ) {
+            Image(
+                modifier = modifier
+                    .size(80.dp)
+                    .background(color = Color.Red),
+                contentScale = ContentScale.Crop,
+                painter = painterResource(item.drawable),
+                contentDescription = null
+    )
+            Text(
+                text = item.name,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = modifier.padding(horizontal = 16.dp)
+            )
         }
+    }
+}
+
+@Composable
+fun HorizontalScrollViewRow(
+    modifier: Modifier = Modifier
+) {
+    val dataset = listOf(
+        Item(R.drawable.ic_launcher_foreground, "Item1"),
+        Item(R.drawable.ic_launcher_foreground, "Item2"),
+        Item(R.drawable.ic_launcher_foreground, "Item3"),
+        Item(R.drawable.ic_launcher_foreground, "Item4"),
+        Item(R.drawable.ic_launcher_foreground, "Item5"),
+    )
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
+    ) {
+        items(items = dataset) { item ->
+            GridViewCardItem(item = item)
+        }
+    }
+}
+
+@Composable
+fun LazyHorizontalGridList(
+    modifier: Modifier = Modifier
+) {
+    val dataset = listOf(
+        Item(R.drawable.ic_launcher_foreground, "Item1"),
+        Item(R.drawable.ic_launcher_foreground, "Item2"),
+        Item(R.drawable.ic_launcher_foreground, "Item3"),
+        Item(R.drawable.ic_launcher_foreground, "Item4"),
+        Item(R.drawable.ic_launcher_foreground, "Item5"),
+    )
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier.height(168.dp)
+    ) {
+        items(items = dataset) { item ->
+            ListViewCardItem(item = item)
+        }
+    }
+}
+
+@Composable
+fun HomeSection(
+    @StringRes title: Int, modifier: Modifier = Modifier, content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
     }
 }
 
 
 @Composable
-fun OnBoardingScreen(onContinueClicked: () -> Unit, modifier: Modifier = Modifier) {
-    Surface(
-        color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+private fun HomeScreen(modifier: Modifier = Modifier) {
+    Column(
+        modifier.verticalScroll(rememberScrollState())
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(title = R.string.app_name) {
+            HorizontalScrollViewRow()
+        }
+        HomeSection(title = R.string.app_name) {
+            LazyHorizontalGridList()
+        }
+        Spacer(Modifier.height(16.dp))
+
+
+    }
+}
+
+@Composable
+fun BottomNavigation(modifier: Modifier = Modifier) {
+    NavigationBar(modifier = modifier, containerColor = MaterialTheme.colorScheme.surfaceVariant) {
+        NavigationBarItem(selected = true,
+            onClick = { /*TODO*/ },
+            label = { Text(text = stringResource(id = R.string.home)) },
+            icon = {
+                Icon(imageVector = Icons.Default.Home, contentDescription = null)
+            })
+        NavigationBarItem(selected = false,
+            onClick = { /*TODO*/ },
+            label = { Text(text = stringResource(id = R.string.profile)) },
+            icon = {
+                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+            })
+
+    }
+}
+
+@Composable
+fun SideNavigationRail(modifier: Modifier = Modifier) {
+    NavigationRail(
+        modifier = modifier.padding(start = 8.dp, end = 8.dp),
+        containerColor = MaterialTheme.colorScheme.background
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "Welcome to state hoisting ")
-            ElevatedButton(
-                onClick = { onContinueClicked() }
-            ) {
-                Text("continue")
-            }
+            NavigationRailItem(selected = true,
+                onClick = { /*TODO*/ },
+                label = { Text(text = stringResource(id = R.string.home)) },
+                icon = {
+                    Icon(imageVector = Icons.Default.Home, contentDescription = null)
+                })
+            Spacer(modifier = Modifier.height(8.dp))
+
+            NavigationRailItem(selected = false,
+                onClick = { /*TODO*/ },
+                label = { Text(text = stringResource(id = R.string.profile)) },
+                icon = {
+                    Icon(imageVector = Icons.Default.Person, contentDescription = null)
+                })
         }
 
-
     }
 }
 
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
-private fun ListViewPreview() {
-    ListView()
+private fun AppInPortraitPreview() {
+    AppInPortrait()
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
-fun OnBoardingPreview() {
+private fun HomeSectionPreview() {
     LearningComposeTheme {
-        OnBoardingScreen(onContinueClicked = {})
+        HomeSection(title = R.string.app_name) {
+            HomeScreen()
+        }
     }
 }
 
-@Preview(
-    showBackground = true, uiMode = UI_MODE_NIGHT_YES,
-)
+@Preview(backgroundColor = 0xFFF5F0EE, showBackground = true)
+@Composable
+private fun BottomNavigationPreview() {
+    LearningComposeTheme {
+        BottomNavigation()
+    }
+}
+
+@Preview(backgroundColor = 0xFFF5F0EE, showBackground = true)
+@Composable
+private fun SideNavigationRailPreview() {
+    LearningComposeTheme {
+        SideNavigationRail()
+    }
+}
+
+@Preview
+@Composable
+private fun LazyHorizontalGridListPreview() {
+    LearningComposeTheme {
+        LazyHorizontalGridList()
+    }
+}
+
+@Preview
+@Composable
+private fun HorizontalScrollViewRowPreview() {
+    LearningComposeTheme {
+        HorizontalScrollViewRow()
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+private fun ListViewCardItemPreview() {
+    LearningComposeTheme {
+        val item = Item(R.drawable.ic_launcher_foreground, name = "Sample")
+        ListViewCardItem(item = item)
+    }
+}
+
+@Preview(backgroundColor = 0xFFF5F0EE, showBackground = true)
+@Composable
+private fun GirdViewPreview() {
+    LearningComposeTheme {
+        val item = Item(R.drawable.ic_launcher_foreground, name = "Sample")
+        GridViewCardItem(item = item)
+
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SearchBarPreview() {
+    LearningComposeTheme {
+        SearchBar()
+    }
+}
+
+@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     LearningComposeTheme {
         Greeting("Android")
-    }
-}
-
-@Preview()
-@Composable
-private fun MyAppPreview() {
-    LearningComposeTheme {
-        MyApp()
     }
 }
