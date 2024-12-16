@@ -12,9 +12,18 @@ Learn to build a Jetpack Compose App - Open-Source Project
 * How Material composables like Scaffold and Bottom Navigation help you create comprehensive layouts.
 * How to build flexible composables using slot APIs.
 
+## Prerequisites
+* Experience with Kotlin syntax, including lambdas
 
-## The app has two main functionalities:
+## What you'll do
+* In this branch, you will learn:
 
+* What Compose is
+* How to build UIs with Compose
+* How to manage state in composable functions
+* How to create a performant list
+* How to add animations
+* How to style and theme an app
 * How to build layouts for different screen configurations.
 
 
@@ -23,6 +32,7 @@ Learn to build a Jetpack Compose App - Open-Source Project
 
 ## Building the project
 * Every feature is easy to follow.
+* Clone the project,see all the branch.
 * Clone the project, the `2.0` branch has the latest code.
 * To learn and implement from the beginning, start with a new project.
 

@@ -97,9 +97,9 @@ fun AppInLandscape() {
             Row {
                 SideNavigationRail()
                 HomeScreen()
+                }
             }
         }
-    }
 }
 
 @Composable
@@ -202,7 +202,7 @@ fun ListViewCardItem(
                 contentScale = ContentScale.Crop,
                 painter = painterResource(item.drawable),
                 contentDescription = null
-            )
+    )
             Text(
                 text = item.name,
                 style = MaterialTheme.typography.titleMedium,
