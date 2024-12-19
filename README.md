@@ -15,11 +15,22 @@ Learn to build a Jetpack Compose Android App - Open-Source Project
 * How to work with lists and state: using the mutableStateListOf and toMutableStateList APIs.
 * How to use ViewModel with Compose.
 
+## Prerequisites
+* Experience with Kotlin syntax, including lambdas
 
-## The app has two main functionalities:
+## What you'll do
+* In this branch, you will learn:
 
 * A water counter to track your water intake.
 * A list of wellness tasks to do throughout the day.
+* What Compose is
+* How to build UIs with Compose
+* How to manage state in composable functions
+* How to create a performant list
+* How to add animations
+* How to style and theme an app
+* How to build layouts for different screen configurations.
+
 
 ## Screenshots from this project
 
@@ -27,6 +38,8 @@ Learn to build a Jetpack Compose Android App - Open-Source Project
 ## Building the project
 * Every feature is easy to follow.
 * Clone the project, the `3.0` branch has the latest code.
+* Clone the project,see all the branch.
+* Clone the project, the `2.0` branch has the latest code.
 * To learn and implement from the beginning, start with a new project.
 
 
