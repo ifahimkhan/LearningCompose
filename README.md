@@ -1,16 +1,19 @@
-# Jetpack  Compose Android App
-Learn to build a Jetpack Compose App - Open-Source Project
+# Jetpack Compose Android App
+Learn to build a Jetpack Compose Android App - Open-Source Project
 
 
 
 <br>
 
 ## We will build and learn the following for the App State in Jetpack Compose:
-* How modifiers help you augment your composables.
-* How standard layout components like Column and LazyRow position child composables.
-* How alignments and arrangements change the position of child composables in their parent.
-* How Material composables like Scaffold and Bottom Navigation help you create comprehensive layouts.
-* How to build flexible composables using slot APIs.
+* How to think about state and events in a Jetpack Compose UI.
+* How Compose uses state to determine which elements to display on the screen.
+* What state hoisting is.
+* How stateful and stateless composable functions work.
+* How Compose automatically tracks state with the State<T> API.
+* How memory and internal state work in a composable function: using the remember and rememberSaveable APIs.
+* How to work with lists and state: using the mutableStateListOf and toMutableStateList APIs.
+* How to use ViewModel with Compose.
 
 ## Prerequisites
 * Experience with Kotlin syntax, including lambdas
@@ -18,6 +21,8 @@ Learn to build a Jetpack Compose App - Open-Source Project
 ## What you'll do
 * In this branch, you will learn:
 
+* A water counter to track your water intake.
+* A list of wellness tasks to do throughout the day.
 * What Compose is
 * How to build UIs with Compose
 * How to manage state in composable functions
@@ -32,6 +37,7 @@ Learn to build a Jetpack Compose App - Open-Source Project
 
 ## Building the project
 * Every feature is easy to follow.
+* Clone the project, the `3.0` branch has the latest code.
 * Clone the project,see all the branch.
 * Clone the project, the `2.0` branch has the latest code.
 * To learn and implement from the beginning, start with a new project.
