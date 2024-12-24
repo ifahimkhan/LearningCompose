@@ -17,11 +17,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fahim.learningcompose.ui.theme.LearningComposeTheme
+import com.fahim.learningcompose.viewmodel.WellnessViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,14 +44,18 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun WellnessScreen(modifier: Modifier = Modifier) {
+fun WellnessScreen(modifier: Modifier = Modifier,
+                   viewModel: WellnessViewModel = viewModel()) {
     Column {
         StatefulCounter(modifier)
         val list = remember {
-            getWellnessTasks().toMutableStateList()
+            viewModel.tasks
         }
         WellnessTasksList(list = list,
-            onCloseTask = { task -> list.remove(task) })
+            onCheckedTask = { task, checked ->
+                viewModel.changeTaskChecked(task, checked)
+            },
+            onCloseTask = { task -> viewModel.remove(task) })
     }
 
 }
