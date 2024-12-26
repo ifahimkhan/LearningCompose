@@ -3,6 +3,7 @@ package com.fahim.learningcompose.ui.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -297,11 +298,13 @@ private fun EditMessage(shown: Boolean) {
     //           disappearance.
     AnimatedVisibility(
         visible = shown,
-        enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight },
+        enter = slideInVertically(
+            initialOffsetY = { fullHeight -> fullHeight },
             animationSpec = tween(durationMillis = 150, easing = LinearOutSlowInEasing)
         ),
-        exit = slideOutVertically(targetOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 150, easing  = FastOutSlowInEasing )
+        exit = slideOutVertically(
+            targetOffsetY = { fullHeight -> fullHeight },
+            animationSpec = tween(durationMillis = 150, easing = FastOutSlowInEasing)
         )
     ) {
         Surface(
@@ -375,6 +378,7 @@ private fun TopicRow(topic: String, expanded: Boolean, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
+                .animateContentSize(animationSpec = tween(150, easing = LinearOutSlowInEasing))
         ) {
             Row {
                 Icon(
