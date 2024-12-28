@@ -484,7 +484,18 @@ private fun HomeTabIndicator(
         tabPositions[page.ordinal].left
     }
 
-    val indicatorRight by transition.animateDp(label = "Indicator right") { page ->
+    val indicatorRight by transition.animateDp(
+        transitionSpec = {
+            if (TabPage.Home isTransitioningTo TabPage.Work) {
+                // Indicator moves to the right.
+                // The left edge moves slower than the right edge.
+                spring(stiffness = Spring.StiffnessMedium)
+            } else {
+                // Indicator moves to the left.
+                // The left edge moves faster than the right edge.
+                spring(stiffness = Spring.StiffnessVeryLow)
+            }
+        }, label = "Indicator right") { page ->
         tabPositions[page.ordinal].right
     }
     val color = if (tabPage == TabPage.Home) PaleDogwood else Green
