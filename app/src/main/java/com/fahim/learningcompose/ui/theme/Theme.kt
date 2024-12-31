@@ -24,6 +24,8 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Navy
 )/*
 private val LightColorScheme = lightColorScheme(
+
+/*private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40
@@ -36,6 +38,15 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
+    *//*
+)*/
+val LightColorScheme = lightColorScheme(
+    primary = Melon,
+    primaryContainer = PaleDogwood,
+    onPrimary = Color.Black,
+    secondary = Peach,
+    onSecondary = Color.Black
+)
     *//*
 )*/
 
