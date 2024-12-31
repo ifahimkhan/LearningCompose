@@ -1,6 +1,5 @@
 package com.fahim.learningcompose.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -13,10 +12,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    surface = Blue,
+    onSurface = Navy,
+    primary = Navy,
+    onPrimary = Chartreuse
 )
+private val LightColorScheme = lightColorScheme(
+    surface = Blue,
+    onSurface = Color.White,
+    primary = LightBlue,
+    onPrimary = Navy
+)/*
+private val LightColorScheme = lightColorScheme(
 
 /*private val LightColorScheme = lightColorScheme(
     primary = Purple40,
@@ -40,6 +47,8 @@ val LightColorScheme = lightColorScheme(
     secondary = Peach,
     onSecondary = Color.Black
 )
+    *//*
+)*/
 
 @Composable
 fun LearningComposeTheme(

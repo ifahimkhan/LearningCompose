@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">LearningCompose</string>
-    <string name="home">Home</string>
     <string name="work">Work</string>
     <string name="weather">Weather</string>
     <string name="temperature">18 ℃</string>
@@ -25,4 +24,9 @@
     <string name="edit">EDIT</string>
     <string name="edit_message">Edit feature is not supported</string>
     <string name="refresh">Refresh</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
 </resources>

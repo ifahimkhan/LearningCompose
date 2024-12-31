@@ -18,3 +18,8 @@ val Seashell = Color(0xFFf8edeb)
 val Peach = Color(0xFFfec89a)
 val Green = Color(0xFFd8e2dc)
 val GreenLight = Color(0xFFEBF1EE)
+
+val Navy = Color(0xFF073042)
+val Blue = Color(0xFF4285F4)
+val LightBlue = Color(0xFFD7EFFE)
+val Chartreuse = Color(0xFFEFF7CF)
